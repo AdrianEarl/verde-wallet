@@ -1,0 +1,45 @@
+
+/* ==============================
+   VERDE WALLET v4
+   Material You Variables
+================================ */
+
+:root{
+
+    --bg:#0D2818;
+    --surface:#123524;
+    --surface-2:#1D4B34;
+
+    --primary:#27AE60;
+    --primary-dark:#058C42;
+
+    --text:#FFFFFF;
+    --text-secondary:#9AC7A3;
+
+    --danger:#E74C3C;
+    --success:#6CFF8F;
+
+    --radius-sm:12px;
+    --radius-md:18px;
+    --radius-lg:24px;
+    --radius-xl:32px;
+
+    --shadow:0 12px 35px rgba(0,0,0,.35);
+
+}
+
+body.light{
+
+    --bg:#EEF3EF;
+    --surface:#FAFCFA;
+    --surface-2:#F4F7F4;
+
+    --primary:#27AE60;
+    --primary-dark:#1F8F52;
+
+    --text:#1B2B1F;
+    --text-secondary:#5D7364;
+
+    --shadow:0 8px 24px rgba(0,0,0,.12);
+
+}
