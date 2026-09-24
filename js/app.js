@@ -10,14 +10,14 @@ hour<12
 ? "Good Afternoon 🌤️"
 : "Good Evening 🌙";
 
-// Register Service Worker
+if ("serviceWorker" in navigator) {
 
-if("serviceWorker" in navigator){
+    window.addEventListener("load", () => {
 
-window.addEventListener("load",()=>{
+        navigator.serviceWorker.register("./service-worker.js")
+            .then(() => console.log("Verde PWA Ready"))
+            .catch(err => console.error("SW failed", err));
 
-navigator.serviceWorker.register("./sw.js");
-
-});
+    });
 
 }

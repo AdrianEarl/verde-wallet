@@ -84,6 +84,27 @@ updateTotals();
 
 });
 
+const clearAllBtn = document.getElementById("clearAllBtn");
+
+clearAllBtn.onclick = () => {
+
+    if (!transactions.length) {
+        return alert("There are no transactions to clear.");
+    }
+
+    if (!confirm("Are you sure you want to clear all transactions?")) {
+        return;
+    }
+
+    transactions = [];
+
+    Storage.saveTransactions(transactions);
+
+    renderTransactions();
+    updateTotals();
+
+};
+
 function formatTransactionTime(timestamp){
 
     const date=new Date(timestamp);
@@ -205,7 +226,7 @@ expenseTotal.textContent=`₱${expense.toFixed(2)}`;
 
 updateBudget(expense);
 
-topCategory.textContent=getTopCategory();
+topCategoryInsight.textContent=getTopCategory();
 
 totalExpenseAnalytics.textContent=`₱${expense.toFixed(2)}`;
 
