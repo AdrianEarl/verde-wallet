@@ -1,0 +1,638 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Verde Wallet</title>
+
+<meta name="theme-color" content="#27AE60">
+<link rel="manifest" href="manifest.json">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL@1&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/cards.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/transactions.css">
+<link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+<div class="container">
+
+<header class="header">
+
+<div class="header-left">
+
+<p id="greetingText" class="greeting">
+Good Morning ✨
+</p>
+
+<h1 id="logoTitle">
+Verde
+</h1>
+
+<p class="subtitle">
+Track every peso effortlessly.
+</p>
+
+</div>
+
+<button id="themeToggle" class="theme-btn">
+
+<span id="themeIcon" class="material-symbols-rounded">
+dark_mode
+</span>
+
+</button>
+
+</header>
+
+<section id="homeScreen" class="screen active-screen">
+
+<div class="balance-card">
+
+<p>Current Balance</p>
+
+<h2 id="balance">₱0.00</h2>
+
+</div>
+
+<div class="summary">
+
+<div class="income">
+
+<p>Income</p>
+
+<h3 id="incomeTotal">₱0.00</h3>
+
+</div>
+
+<div class="expense">
+
+<p>Expense</p>
+
+<h3 id="expenseTotal">₱0.00</h3>
+
+</div>
+
+</div>
+
+<div class="quick-add">
+
+<button data-category="Food" data-amount="120">
+
+<span class="material-symbols-rounded">coffee</span>
+
+Coffee
+
+</button>
+
+<button data-category="Food" data-amount="150">
+
+<span class="material-symbols-rounded">restaurant</span>
+
+Lunch
+
+</button>
+
+<button data-category="Transport" data-amount="300">
+
+<span class="material-symbols-rounded">local_gas_station</span>
+
+Gas
+
+</button>
+
+<button data-category="Transport" data-amount="30">
+
+<span class="material-symbols-rounded">directions_bus</span>
+
+Fare
+
+</button>
+
+</div>
+
+<div class="transactions">
+
+<div class="section-title">
+
+<h3>Recent Transactions</h3>
+
+<button id="clearAllBtn" class="clear-link">
+Clear
+</button>
+
+</div>
+
+<input
+id="searchInput"
+class="search-box"
+placeholder="Search transactions...">
+
+<ul id="transactionList">
+
+<li class="empty-state">
+
+<span class="material-symbols-rounded empty-icon">
+wallet
+</span>
+
+<p>No transactions yet.</p>
+
+</li>
+
+</ul>
+
+</div>
+
+</section>
+
+<section id="analyticsScreen" class="screen">
+
+    <h2>📊 Analytics</h2>
+
+    <!-- =================================
+         MONTHLY OVERVIEW
+    ================================== -->
+
+    <div class="analytics-overview">
+
+        <div class="analytics-overview-card">
+
+            <span class="material-symbols-rounded">
+                payments
+            </span>
+
+            <p>Total Spent</p>
+
+            <h3 id="totalExpenseAnalytics">
+                ₱0.00
+            </h3>
+
+            <small>This month</small>
+
+        </div>
+
+
+        <div class="analytics-overview-card">
+
+            <span class="material-symbols-rounded">
+                receipt_long
+            </span>
+
+            <p>Expenses</p>
+
+            <h3 id="expenseCount">
+                0
+            </h3>
+
+            <small>Transactions</small>
+
+        </div>
+
+
+        <div class="analytics-overview-card">
+
+            <span class="material-symbols-rounded">
+                calendar_today
+            </span>
+
+            <p>Daily Average</p>
+
+            <h3 id="averageDailySpending">
+                ₱0
+            </h3>
+
+            <small>This month</small>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================
+         SPENDING BREAKDOWN
+    ================================== -->
+
+    <div class="analytics-section">
+
+        <div class="analytics-section-title">
+
+            <div>
+
+                <h3>Spending Breakdown</h3>
+
+                <p>Where your money is going</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="analytics-chart">
+
+            <canvas id="expenseChart"></canvas>
+
+        </div>
+
+
+        <div
+            id="analyticsCategoryList"
+            class="analytics-category-list"
+        ></div>
+
+    </div>
+
+
+    <!-- =================================
+         WEEKLY SPENDING
+    ================================== -->
+
+    <div class="analytics-section weekly-analytics">
+
+        <div class="analytics-section-title">
+
+            <div>
+
+                <h3>Weekly Spending</h3>
+
+                <p>Your spending this week</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="weekly-chart">
+
+            <canvas id="weeklyChart"></canvas>
+
+        </div>
+
+
+        <div class="weekly-insight">
+
+            <span class="material-symbols-rounded">
+                calendar_month
+            </span>
+
+            <p id="highestSpendingDay">
+                No spending recorded this week.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================
+         QUICK INSIGHTS
+    ================================== -->
+
+    <div class="analytics-section">
+
+        <div class="analytics-section-title">
+
+            <div>
+
+                <h3>Quick Insights</h3>
+
+                <p>Small details worth noticing</p>
+
+            </div>
+
+        </div>
+
+
+        <div class="analytics-insights">
+
+
+            <div class="analytics-insight-card">
+
+                <div class="analytics-insight-icon">
+
+                    <span class="material-symbols-rounded">
+                        category
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Top Category
+                    </strong>
+
+                    <p id="topCategoryInsight">
+                        No spending data yet.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="analytics-insight-card">
+
+                <div class="analytics-insight-icon">
+
+                    <span class="material-symbols-rounded">
+                        speed
+                    </span>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Spending Pace
+                    </strong>
+
+                    <p id="averageInsight">
+                        No spending data yet.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="budgetScreen" class="screen">
+
+    <h2>💰 Budget</h2>
+
+<!-- Hero Budget Card -->
+
+    <div class="budget-hero">
+
+        <p>Monthly Budget</p>
+
+        <h1 id="budgetAmountBig">₱5,000</h1>
+
+        <div class="budget-bar">
+
+            <div id="budgetFill"></div>
+
+        </div>
+
+        <div class="budget-meta">
+
+            <span id="budgetUsed">0% Used</span>
+
+            <span id="budgetRemaining">
+                ₱5,000 left
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Insight Cards -->
+
+    <div class="budget-insights">
+
+        <div class="insight-card">
+
+            <span class="material-symbols-rounded">
+                calendar_today
+            </span>
+
+            <p>Daily Safe Spend</p>
+
+            <h3 id="dailySafeSpend">₱0/day</h3>
+            <caption>Until month-end</caption>
+
+        </div>
+
+        <div class="insight-card">
+
+            <span class="material-symbols-rounded">
+                trending_up
+            </span>
+
+            <p>Status</p>
+
+            <h3 id="budgetStatusText">On Track</h3>
+
+        </div>
+
+    </div>
+
+    <!-- Status Card -->
+
+    <div id="budgetStatusCard" class="status-card status-good">
+
+        <span class="material-symbols-rounded">
+            check_circle
+        </span>
+
+        <div>
+
+            <strong id="budgetStatusTitle">On Track</strong>
+
+            <p id="budgetStatusMessage">
+                You're spending at a healthy pace this month.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- Category Breakdown -->
+
+    <div class="budget-breakdown">
+
+        <h3>Category Spending</h3>
+
+        <div id="categoryBreakdownList"></div>
+
+    </div>
+
+    <!-- Edit Budget -->
+
+    <button id="editBudgetBtn" class="edit-budget-btn">
+
+        <span class="material-symbols-rounded">
+            edit
+        </span>
+
+        Edit Monthly Budget
+
+    </button>
+
+</section>
+
+<section id="settingsScreen" class="screen">
+
+<h2>⚙️ Settings</h2>
+
+<div class="settings-card">
+
+<button id="exportBtn" class="secondary-btn">
+
+<span class="material-symbols-rounded">download</span>
+
+Export Backup
+
+</button>
+
+<button id="importBtn" class="secondary-btn">
+
+<span class="material-symbols-rounded">upload</span>
+
+Import Backup
+
+</button>
+
+<input type="file" id="importFile" hidden>
+
+<button id="clearDataBtn" class="danger-btn">
+
+<span class="material-symbols-rounded">delete</span>
+
+Clear All Data
+
+</button>
+
+</div>
+
+<div class="about-card">
+
+<h3>Verde</h3>
+
+<p>Version 4.0 Emerald</p>
+
+<p>Powered by AEGIS</p>
+
+</div>
+
+</section>
+
+</div>
+
+<nav class="bottom-nav">
+
+<button class="nav-btn active" data-screen="home">
+
+<span class="material-symbols-rounded">home</span>
+
+<span>Home</span>
+
+</button>
+
+<button class="nav-btn" data-screen="analytics">
+
+<span class="material-symbols-rounded">analytics</span>
+
+<span>Analytics</span>
+
+</button>
+
+<button id="addBtn" class="fab">
+
+<span class="material-symbols-rounded">add</span>
+
+</button>
+
+<button class="nav-btn" data-screen="budget">
+
+<span class="material-symbols-rounded">account_balance_wallet</span>
+
+<span>Budget</span>
+
+</button>
+
+<button class="nav-btn" data-screen="settings">
+
+<span class="material-symbols-rounded">settings</span>
+
+<span>Settings</span>
+
+</button>
+
+</nav>
+
+<div id="sheetOverlay" class="sheet-overlay hidden">
+
+<div id="bottomSheet" class="bottom-sheet">
+
+<div class="sheet-handle"></div>
+
+<h2>Add Transaction</h2>
+
+<div class="type-toggle">
+
+<button id="incomeBtn" class="active">
+Income
+</button>
+
+<button id="expenseBtn">
+Expense
+</button>
+
+</div>
+
+<input id="amountInput" type="number" placeholder="Amount">
+
+<select id="categoryInput">
+
+<option>Food</option>
+<option>Transport</option>
+<option>Bills</option>
+<option>Shopping</option>
+<option>Entertainment</option>
+<option>Salary</option>
+<option>Other</option>
+
+</select>
+
+<input id="noteInput" placeholder="Optional note">
+
+<div class="sheet-actions">
+
+<button id="cancelBtn" class="secondary-btn">
+Cancel
+</button>
+
+<button id="saveBtn" class="primary-btn">
+Save
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="js/storage.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/chart.js"></script>
+<script src="js/budget.js"></script>
+<script src="js/transactions.js"></script>
+<script src="js/backup.js"></script>
+<script src="js/easteregg.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
